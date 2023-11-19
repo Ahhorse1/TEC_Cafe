@@ -16,7 +16,7 @@ function updatePC(id) {
 
     switch (pcPairs[id]) {
         case 0:
-            $("#assignUserModal").modal('show')
+            $("#assignUserModal").modal('show');
             pcPairs[id] = 1
             document.getElementById(id).style.backgroundColor = colors[1];
             pushQueue(id);
@@ -59,6 +59,7 @@ async function startTimer(id, maxTime=7200){
     });
 }
 
+
 function closeModal() {
     return new Promise((resolve, reject) => {
       var name = document.getElementById("username");
@@ -71,3 +72,36 @@ function closeModal() {
       });
     });
   }
+
+function updateWaitlist(){
+    $("#addtoWaitlist").modal('show')
+    var waitQueue = document.getElementById("ppl_queue");
+    let loginForm = document.getElementById("loginForm");
+    var name;
+    var pid;
+
+    loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        name = document.getElementById("name");
+        pid = document.getElementById("pid");
+
+        if (name.value == "" || pid.value == "") {
+            alert("Ensure you input a value in both fields!");
+        } else {
+            // perform operation with form input
+            alert("This form has been successfully submitted!");
+            console.log(
+            `This form has a name of ${name.value} and pid of ${pid.value}`
+            );
+            
+            var li = document.createElement("li");
+            li.innerHTML = name.value;
+            li.id = name+pid;
+            waitQueue.appendChild(li);
+
+            name.value = "";
+            pid.value = "";
+        }
+    });
+}
