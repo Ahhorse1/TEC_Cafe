@@ -23,7 +23,27 @@
     </head>
     <body>
         <div class="layout">
-            <!-- Modal -->
+            <!-- User Info Modal -->
+            <div class="modal fade" id="userInfoModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content" id="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">User Information </h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <h6 id="info-name"></h6>
+                            <h6 id="info-pid"></h6>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-default" id="endButton">End Session</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Using Modal -->
             <div class="modal fade" id="addToUsingModal" role="dialog">
                 <div class="modal-dialog">
                     <!-- Modal content-->
@@ -69,42 +89,42 @@
             </div>
             <div id="Row">
                 <div class="container" id = "row1">
-                    <button class = "pcButtons" id = "d1" onClick="updatePC('d1')">D1</button>
-                    <button class = "pcButtons" id = "d2" onClick="updatePC('d2')">D2</button>
-                    <button class = "pcButtons" id = "d3" onClick="updatePC('d3')">D3</button>
-                    <button class = "pcButtons" id = "d4" onClick="updatePC('d4')">D4</button>
-                    <button class = "pcButtons" id = "d5" onClick="updatePC('d5')">D5</button>
-                    <button class = "pcButtons" id = "d6" onClick="updatePC('d6')">D6</button>
+                    <button class = "pcButtons" id = "d1" onmouseover="getInfo('d1')" onClick="updatePC('d1')">D1</button>
+                    <button class = "pcButtons" id = "d2" onmouseover="getInfo('d2')" onClick="updatePC('d2')">D2</button>
+                    <button class = "pcButtons" id = "d3" onmouseover="getInfo('d3')" onClick="updatePC('d3')">D3</button>
+                    <button class = "pcButtons" id = "d4" onmouseover="getInfo('d4')" onClick="updatePC('d4')">D4</button>
+                    <button class = "pcButtons" id = "d5" onmouseover="getInfo('d5')" onClick="updatePC('d5')">D5</button>
+                    <button class = "pcButtons" id = "d6" onmouseover="getInfo('d6')" onClick="updatePC('d6')">D6</button>
                 </div>
                 <div class="container" id = "row2">
-                    <button class = "pcButtons" id = "c1" onClick="updatePC('c1')">C1</button>
-                    <button class = "pcButtons" id = "c2" onClick="updatePC('c2')">C2</button>
-                    <button class = "pcButtons" id = "c3" onClick="updatePC('c3')">C3</button>
-                    <button class = "pcButtons" id = "c4" onClick="updatePC('c4')">C4</button>
-                    <button class = "pcButtons" id = "c5" onClick="updatePC('c5')">C5</button>
-                    <button class = "pcButtons" id = "c6" onClick="updatePC('c6')">C6</button>
+                    <button class = "pcButtons" id = "c2" onmouseover="getInfo('c1')" onClick="updatePC('c2')">C2</button>
+                    <button class = "pcButtons" id = "c3" onmouseover="getInfo('c2')" onClick="updatePC('c3')">C3</button>
+                    <button class = "pcButtons" id = "c4" onmouseover="getInfo('c3')" onClick="updatePC('c4')">C4</button>
+                    <button class = "pcButtons" id = "c1" onmouseover="getInfo('c4')" onClick="updatePC('c1')">C1</button>
+                    <button class = "pcButtons" id = "c5" onmouseover="getInfo('c5')" onClick="updatePC('c5')">C5</button>
+                    <button class = "pcButtons" id = "c6" onmouseover="getInfo('c6')" onClick="updatePC('c6')">C6</button>
                 </div>       
                 <div class="container" id = "row3">
-                    <button class = "pcButtons" id = "b1" onClick="updatePC('b1')">B1</button>
-                    <button class = "pcButtons" id = "b2" onClick="updatePC('b2')">B2</button>
-                    <button class = "pcButtons" id = "b3" onClick="updatePC('b3')">B3</button>
-                    <button class = "pcButtons" id = "b4" onClick="updatePC('b4')">B4</button>
-                    <button class = "pcButtons" id = "b5" onClick="updatePC('b5')">B5</button>
+                    <button class = "pcButtons" id = "b1" onmouseover="getInfo('b1')" onClick="updatePC('b1')">B1</button>
+                    <button class = "pcButtons" id = "b2" onmouseover="getInfo('b2')" onClick="updatePC('b2')">B2</button>
+                    <button class = "pcButtons" id = "b3" onmouseover="getInfo('b3')" onClick="updatePC('b3')">B3</button>
+                    <button class = "pcButtons" id = "b4" onmouseover="getInfo('b4')" onClick="updatePC('b4')">B4</button>
+                    <button class = "pcButtons" id = "b5" onmouseover="getInfo('b5')" onClick="updatePC('b5')">B5</button>
                 </div>
                 <div class="container" id = "row4">
-                    <button class = "pcButtons" id = "a1" onClick="updatePC('a1')">A1</button>
-                    <button class = "pcButtons" id = "a2" onClick="updatePC('a2')">A2</button>
-                    <button class = "pcButtons" id = "a3" onClick="updatePC('a3')">A3</button>
-                    <button class = "pcButtons" id = "a4" onClick="updatePC('a4')">A4</button>
-                    <button class = "pcButtons" id = "a5" onClick="updatePC('a5')">A5</button>
+                    <button class = "pcButtons" id = "a1" onmouseover="getInfo('a1')" onClick="updatePC('a1')">A1</button>
+                    <button class = "pcButtons" id = "a2" onmouseover="getInfo('a2')" onClick="updatePC('a2')">A2</button>
+                    <button class = "pcButtons" id = "a3" onmouseover="getInfo('a3')" onClick="updatePC('a3')">A3</button>
+                    <button class = "pcButtons" id = "a4" onmouseover="getInfo('a4')" onClick="updatePC('a4')">A4</button>
+                    <button class = "pcButtons" id = "a5" onmouseover="getInfo('a5')" onClick="updatePC('a5')">A5</button>
                 </div>
             </div>
             <div id="Column">
                 <div class="container2" id = "column1">
-                    <button class = "pcButtons" id = "e1" onClick="updatePC('e1')">E1</button>
-                    <button class = "pcButtons" id = "e2" onClick="updatePC('e2')">E2</button>
-                    <button class = "pcButtons" id = "e3" onClick="updatePC('e3')">E3</button>
-                    <button class = "pcButtons" id = "e4" onClick="updatePC('e4')">E4</button>
+                    <button class = "pcButtons" id = "e1" onmouseover="getInfo('e1')" onClick="updatePC('e1')">E1</button>
+                    <button class = "pcButtons" id = "e2" onmouseover="getInfo('e2')" onClick="updatePC('e2')">E2</button>
+                    <button class = "pcButtons" id = "e3" onmouseover="getInfo('e3')" onClick="updatePC('e3')">E3</button>
+                    <button class = "pcButtons" id = "e4" onmouseover="getInfo('e4')" onClick="updatePC('e4')">E4</button>
                 </div>
             </div>
             <div id="Column">
