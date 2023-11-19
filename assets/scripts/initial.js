@@ -9,17 +9,24 @@ function init() {
 
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function updatePC(id) {
     if (!pcPairs.hasOwnProperty(id)){
         pcPairs[id] = 0;
+        $("#assignUserModal").modal('show')
     }
 
     switch (pcPairs[id]) {
         case 0:
+            $("#assignUserModal").modal('show')
             pcPairs[id] = 1
             document.getElementById(id).style.backgroundColor = colors[1];
             pushQueue(id);
             startTimer(id);
+            
             break;
         default:
             pcPairs[id] = 0
