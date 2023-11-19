@@ -3,6 +3,7 @@ window.addEventListener("DOMContentLoaded", init);
 const colors = ['#04AA6D', '#dce30f', '#e3130f'];
 
 var pcPairs = {}
+var pcPairsTiming = {}
 var inUse = []
 
 function init() {
@@ -25,6 +26,7 @@ function updatePC(id) {
         default:
             pcPairs[id] = 0
             document.getElementById(id).style.backgroundColor = colors[0];
+            clearInterval(pcPairsTiming[id]);
             remove_inUse(id); 
             updateQueue();
     }
@@ -51,20 +53,18 @@ function updateQueue(){
     }
 }
 
-function startTimer(id){
-    var maxTime = 7200;
-    var li = document.getElementById(id+String("time"));
-    var timerID = setInterval(function () {
+function startTimer(id, maxTime=7200){
+    pcPairsTiming[id] = setInterval(function () {
         maxTime -= 1;
         remaining = new Date(maxTime * 1000).toISOString().substring(11, 16)
         if (maxTime == 1600){
             pcPairs[id] = 2
             document.getElementById(id).style.backgroundColor = colors[2];
         }
-        li.innerHTML = id + ": " + remaining;
+        document.getElementById(id+String("time")).innerHTML = id + ": " + remaining;
         if (maxTime == 0) {
-            li.innerHTML = id + ": 2 Hour Limit Reached";
-            clearInterval(timerID);
+            document.getElementById(id+String("time")).innerHTML = id + ": Limit Reached";
+            clearInterval(pcPairsTiming[id]);
         }
     });
 }
