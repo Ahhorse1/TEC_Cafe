@@ -11,7 +11,7 @@ function init() {
 
 }
 
-function updatePC(id) {
+async function updatePC(id) {
     if (!pcPairs.hasOwnProperty(id)){
         pcPairs[id] = 0;
     }
@@ -20,6 +20,16 @@ function updatePC(id) {
         case 0:
             let loginForm = document.getElementById("using-loginForm");
             $("#addToUsingModal").modal('show');
+            let cancelButton = document.getElementById("cancelBtn")
+            cancelButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                pcPairs[id] = 0;
+                document.getElementById(id).style.backgroundColor = colors[0];
+                clearInterval(pcPairsTiming[id]);
+                removeQueue(id);
+                $("#addToUsingModal").modal('toggle');
+            })
+            await submitModal(id, "addToUsingModal");
             pcPairs[id] = 1
             document.getElementById(id).style.backgroundColor = colors[1];
             pushQueue(id);
