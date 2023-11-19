@@ -4,7 +4,6 @@ const colors = ['#04AA6D', '#dce30f', '#e3130f'];
 
 var pcPairs = {}
 var pcPairsTiming = {}
-var inUse = []
 
 function init() {
 
@@ -25,8 +24,7 @@ function updatePC(id) {
             $("#assignUserModal").modal('show');
             pcPairs[id] = 1
             document.getElementById(id).style.backgroundColor = colors[1];
-            inUse.push(id);
-            updateQueue();
+            pushQueue(id);
             startTimer(id);
             
             break;
@@ -34,30 +32,20 @@ function updatePC(id) {
             pcPairs[id] = 0
             document.getElementById(id).style.backgroundColor = colors[0];
             clearInterval(pcPairsTiming[id]);
-            remove_inUse(id); 
-            updateQueue();
+            removeQueue(id);
     }
 }
 
-function remove_inUse(id) {
-    var newArray = [];
-    for (let i = 0; i < inUse.length; i++){
-        if (inUse[i] != id){
-            newArray.push(inUse[i]);
-        }
-    }
-    inUse = newArray;
-}
-
-function updateQueue(){
+function pushQueue(id) {
     var currentQueue = document.getElementById("pc_queue");
-    currentQueue.innerHTML = "";
-    for(let i = 0; i < inUse.length; i++){
-        var li = document.createElement("li");
-        li.innerHTML = inUse[i];
-        li.id = inUse[i]+String("time");
-        currentQueue.appendChild(li);
-    }
+    var li = document.createElement("li");
+    li.innerHTML = id;
+    li.id = id + "time";
+    currentQueue.appendChild(li);
+}
+
+function removeQueue(id) {
+    document.getElementById(id+"time").remove();
 }
 
 function startTimer(id, maxTime=7200){
@@ -68,9 +56,9 @@ function startTimer(id, maxTime=7200){
             pcPairs[id] = 2
             document.getElementById(id).style.backgroundColor = colors[2];
         }
-        document.getElementById(id+String("time")).innerHTML = id + ": " + remaining + name;
+        document.getElementById(id+"time").innerHTML = id + ": " + remaining;
         if (maxTime == 0) {
-            document.getElementById(id+String("time")).innerHTML = id + ": Limit Reached";
+            document.getElementById(id+"time").innerHTML = id + ": Limit Reached";
             clearInterval(pcPairsTiming[id]);
         }
     });
