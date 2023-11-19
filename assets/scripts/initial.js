@@ -81,10 +81,10 @@ function updateWaitlist(){
             alert("Ensure you input a value in both fields!");
         } else {
             // perform operation with form input
-            alert("This form has been successfully submitted!");
-            console.log(
-            `This form has a name of ${name.value} and pid of ${pid.value}`
-            );
+            // alert("This form has been successfully submitted!");
+            // console.log(
+            // `This form has a name of ${name.value} and pid of ${pid.value}`
+            // );
             
             var li = document.createElement("li");
             li.innerHTML = name.value;
@@ -93,14 +93,7 @@ function updateWaitlist(){
 
             name.value = "";
             pid.value = "";
+            $('#addtoWaitlist').modal('toggle'); 
         }
     });
-
-    
-    // for(let i = 0; i < inUse.length; i++){
-    //     var li = document.createElement("li");
-    //     li.innerHTML = inUse[i];
-    //     li.id = inUse[i]+String("time");
-    //     currentQueue.appendChild(li);
-    // }
 }
