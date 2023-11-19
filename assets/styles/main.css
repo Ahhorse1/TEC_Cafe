@@ -20,7 +20,13 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    align-self: flex-end;
+}
+
+.container3 {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    margin: 10px;
 }
 
 .layout {
