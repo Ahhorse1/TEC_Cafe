@@ -4,12 +4,14 @@ const colors = ['#04AA6D', '#dce30f', '#e3130f'];
 
 var pcPairs = {};
 var pcPairsTiming = {};
+var pcToUser = {}
+var userToPC = {}
 
 function init() {
 
 }
 
-function updatePC(id) {
+async function updatePC(id) {
     if (!pcPairs.hasOwnProperty(id)){
         pcPairs[id] = 0;
     }
@@ -18,6 +20,16 @@ function updatePC(id) {
         case 0:
             let loginForm = document.getElementById("using-loginForm");
             $("#addToUsingModal").modal('show');
+            let cancelButton = document.getElementById("cancelBtn")
+            cancelButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                pcPairs[id] = 0;
+                document.getElementById(id).style.backgroundColor = colors[0];
+                clearInterval(pcPairsTiming[id]);
+                removeQueue(id);
+                $("#addToUsingModal").modal('toggle');
+            })
+            await submitModal(id, "addToUsingModal");
             pcPairs[id] = 1
             document.getElementById(id).style.backgroundColor = colors[1];
             pushQueue(id);
@@ -25,11 +37,35 @@ function updatePC(id) {
             loginForm.reset();
             break;
         default:
-            pcPairs[id] = 0
-            document.getElementById(id).style.backgroundColor = colors[0];
-            clearInterval(pcPairsTiming[id]);
-            removeQueue(id);
+            $("#userInfoModal").modal('show');
+            let name = pcToUser[id][0]
+            let pid = pcToUser[id][1]
+            let nameELem = document.getElementById("info-name")
+            let pidElem = document.getElementById("info-pid")
+            nameELem.innerHTML="Name: "+ name;
+            pidElem.innerHTML = "PID: "+ pid;
+            let endBtn = document.getElementById("endButton")
+            endBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                pcPairs[id] = 0;
+                document.getElementById(id).style.backgroundColor = colors[0];
+                clearInterval(pcPairsTiming[id]);
+                removeQueue(id);
+                $("#userInfoModal").modal('toggle');
+            })
     }
+}
+
+function getInfo(id) {
+    if (!pcPairs.hasOwnProperty(id) || pcPairs[id] == 0) {
+        return;
+    }
+    let userInfo = pcToUser[id];
+    let name = userInfo[0]
+    let pid = userInfo[1]
+    console.log("works")
+    let button = document.getElementById(id);
+    button.title = "Name: " + name + "\n" + "PID: " + pid;
 }
 
 function pushQueue(id) {
@@ -41,11 +77,12 @@ function pushQueue(id) {
 }
 
 function removeQueue(id) {
-    document.getElementById(id+"time").remove();
+    var currentQueue = document.getElementById("pc_queue");
+    currentQueue.removeChild(document.getElementById(id+"time"));
 }
 
 async function startTimer(id, modalID ,maxTime=7200){
-    await submitModal(modalID);
+    await submitModal(id, modalID);
     pcPairsTiming[id] = setInterval(function () {
         maxTime -= 1;
         remaining = new Date(maxTime * 1000).toISOString().substring(11, 16)
@@ -63,7 +100,7 @@ async function startTimer(id, modalID ,maxTime=7200){
 }
 
 
-function submitModal(modalID) {
+function submitModal(id, modalID) {
     return new Promise((resolve, reject) => {
         let loginForm = document.getElementById("using-loginForm");
         var name;
@@ -75,12 +112,14 @@ function submitModal(modalID) {
             name = document.getElementById("using-name");
             pid = document.getElementById("using-pid");
 
-            console.log(name.value + " " + pid.value);
-
             if (name.value != "" && pid.value != "") {           
                 $('#'+modalID).modal('toggle');
                 resolve();
             }
+            // map to PC
+            pcToUser[id] = [name.value, pid.value];
+            userToPC[name.value] = id;
+            console.log(pcToUser[id]);
         });
     });
     
