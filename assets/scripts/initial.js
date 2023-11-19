@@ -2,21 +2,16 @@ window.addEventListener("DOMContentLoaded", init);
 
 const colors = ['#04AA6D', '#dce30f', '#e3130f'];
 
-var pcPairs = {}
-var pcPairsTiming = {}
+var pcPairs = {};
+var pcPairsTiming = {};
 
 function init() {
 
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function updatePC(id) {
     if (!pcPairs.hasOwnProperty(id)){
         pcPairs[id] = 0;
-        $("#assignUserModal").modal('show')
     }
 
     switch (pcPairs[id]) {
@@ -26,7 +21,6 @@ function updatePC(id) {
             document.getElementById(id).style.backgroundColor = colors[1];
             pushQueue(id);
             startTimer(id);
-            
             break;
         default:
             pcPairs[id] = 0
@@ -48,7 +42,8 @@ function removeQueue(id) {
     document.getElementById(id+"time").remove();
 }
 
-function startTimer(id, maxTime=7200){
+async function startTimer(id, maxTime=7200){
+    await closeModal();
     pcPairsTiming[id] = setInterval(function () {
         maxTime -= 1;
         remaining = new Date(maxTime * 1000).toISOString().substring(11, 16)
@@ -63,6 +58,20 @@ function startTimer(id, maxTime=7200){
         }
     });
 }
+
+
+function closeModal() {
+    return new Promise((resolve, reject) => {
+      var name = document.getElementById("username");
+      var pid = document.getElementById("pid");
+      var submitButton = document.getElementById("submit");
+      submitButton.addEventListener("click", function(){ 
+        if (name.value != "" && pid.value != ""){
+            resolve();
+        }
+      });
+    });
+  }
 
 function updateWaitlist(){
     $("#addtoWaitlist").modal('show')
