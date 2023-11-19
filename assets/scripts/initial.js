@@ -12,10 +12,12 @@ function init() {
 function updatePC(id) {
     if (!pcPairs.hasOwnProperty(id)){
         pcPairs[id] = 0;
+        $("#assignUserModal").modal('show')
     }
 
     switch (pcPairs[id]) {
         case 0:
+            $("#assignUserModal").modal('show')
             pcPairs[id] = 1
             document.getElementById(id).style.backgroundColor = colors[1];
             inUse.push(id);

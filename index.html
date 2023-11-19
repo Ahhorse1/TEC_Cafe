@@ -23,6 +23,28 @@
     </head>
     <body>
         <div class="layout">
+            <!-- Modal -->
+            <div class="modal fade" id="assignUserModal" role="dialog">
+                <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Fill in below </h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form >
+                            Name: <input type="text" id="name"/><br>
+                            PID: <input type="text" id="pid" />
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
+                    </div>
+                </div>
+
+                </div>
+            </div>
             <div id="Row">
                 <div class="container" id = "row1">
                     <button class = "pcButtons" id = "d1" onClick="updatePC('d1')">D1</button>
