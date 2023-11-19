@@ -73,6 +73,58 @@ function closeModal() {
     });
   }
 
+function dragAndDropItem() {
+    const list = document.getElementById('ppl_queue');
+
+    let draggedItem = null;
+    let blankItem = document.createElement("li");
+
+    // When first dragging, hide the dragged item
+    list.addEventListener('dragstart', function (e) {
+        draggedItem = e.target;
+        setTimeout(function () {
+            draggedItem.style.display = 'none';
+        }, 0);
+    });
+    // While dragging, move the rest of the elements down, insert dragged item 
+    list.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        const afterElement = findElementAfterDrop(list, e.clientY);
+        // insert blank item for visibility purposes (will delete later)
+        list.insertBefore(blankItem, afterElement);
+        if (afterElement == null) {
+            list.appendChild(draggedItem);
+        } else {
+            list.insertBefore(draggedItem, afterElement);
+        }
+    });
+    // Find the element that should be right after the dragged item
+    function findElementAfterDrop(container, y) {
+        const draggableElements = [...container.querySelectorAll('li:not(.dragging)')];
+
+        return draggableElements.reduce(function (closest, child) {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    };
+
+    // Once dragging is finished, delete the blank item, show the dragged item
+    list.addEventListener('dragend', function (e) {
+        if (list.contains(blankItem)) {
+            list.removeChild(blankItem);
+        }
+        draggedItem.style.display = 'block';
+        draggedItem = null;
+    });
+}
+
 // adds user to waitlist after filling in form
 function updateWaitlist(){
     $("#addtoWaitlist").modal('show');
@@ -92,6 +144,8 @@ function updateWaitlist(){
             alert("Ensure you input a value in both fields!");
         } else {            
             var li = document.createElement("li");
+            li.draggable = true;
+            li.ondragstart = dragAndDropItem();
             li.innerHTML = name.value;
             li.id = name+pid;
             waitQueue.appendChild(li);
