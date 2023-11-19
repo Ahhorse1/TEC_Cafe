@@ -33,7 +33,7 @@ async function updatePC(id) {
             pcPairs[id] = 1
             document.getElementById(id).style.backgroundColor = colors[1];
             pushQueue(id);
-            startTimer(id,'addToUsingModal');
+            startTimer(id);
             loginForm.reset();
             break;
         default:
@@ -81,8 +81,7 @@ function removeQueue(id) {
     currentQueue.removeChild(document.getElementById(id+"time"));
 }
 
-async function startTimer(id, modalID ,maxTime=7200){
-    await submitModal(id, modalID);
+async function startTimer(id,maxTime=7200){
     pcPairsTiming[id] = setInterval(function () {
         maxTime -= 1;
         remaining = new Date(maxTime * 1000).toISOString().substring(11, 16)
