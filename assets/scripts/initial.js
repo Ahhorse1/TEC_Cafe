@@ -5,23 +5,31 @@ const colors = ['#04AA6D', '#dce30f', '#e3130f'];
 var pcPairs = {}
 var pcPairsTiming = {}
 var inUse = []
+var modalComplete = {}
 
 function init() {
 
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function updatePC(id) {
     if (!pcPairs.hasOwnProperty(id)){
         pcPairs[id] = 0;
+        $("#assignUserModal").modal('show')
     }
 
     switch (pcPairs[id]) {
         case 0:
+            $("#assignUserModal").modal('show')
             pcPairs[id] = 1
             document.getElementById(id).style.backgroundColor = colors[1];
             inUse.push(id);
             updateQueue();
             startTimer(id);
+            
             break;
         default:
             pcPairs[id] = 0
@@ -61,7 +69,7 @@ function startTimer(id, maxTime=7200){
             pcPairs[id] = 2
             document.getElementById(id).style.backgroundColor = colors[2];
         }
-        document.getElementById(id+String("time")).innerHTML = id + ": " + remaining;
+        document.getElementById(id+String("time")).innerHTML = id + ": " + remaining + name;
         if (maxTime == 0) {
             document.getElementById(id+String("time")).innerHTML = id + ": Limit Reached";
             clearInterval(pcPairsTiming[id]);
