@@ -16,11 +16,13 @@ function updatePC(id) {
 
     switch (pcPairs[id]) {
         case 0:
-            $("#assignUserModal").modal('show');
+            let loginForm = document.getElementById("using-loginForm");
+            $("#addToUsingModal").modal('show');
             pcPairs[id] = 1
             document.getElementById(id).style.backgroundColor = colors[1];
             pushQueue(id);
-            startTimer(id);
+            startTimer(id,'addToUsingModal');
+            loginForm.reset();
             break;
         default:
             pcPairs[id] = 0
@@ -42,8 +44,8 @@ function removeQueue(id) {
     document.getElementById(id+"time").remove();
 }
 
-async function startTimer(id, maxTime=7200){
-    await closeModal();
+async function startTimer(id, modalID ,maxTime=7200){
+    await submitModal(modalID);
     pcPairsTiming[id] = setInterval(function () {
         maxTime -= 1;
         remaining = new Date(maxTime * 1000).toISOString().substring(11, 16)
@@ -57,20 +59,31 @@ async function startTimer(id, maxTime=7200){
             clearInterval(pcPairsTiming[id]);
         }
     });
+    
 }
 
 
-function closeModal() {
+function submitModal(modalID) {
     return new Promise((resolve, reject) => {
-      var name = document.getElementById("username");
-      var pid = document.getElementById("pid");
-      var submitButton = document.getElementById("submit");
-      submitButton.addEventListener("click", function(){ 
-        if (name.value != "" && pid.value != ""){
-            resolve();
-        }
-      });
+        let loginForm = document.getElementById("using-loginForm");
+        var name;
+        var pid;
+        loginForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            // e.stopImmediatePropagation();
+
+            name = document.getElementById("using-name");
+            pid = document.getElementById("using-pid");
+
+            console.log(name.value + " " + pid.value);
+
+            if (name.value != "" && pid.value != "") {           
+                $('#'+modalID).modal('toggle');
+                resolve();
+            }
+        });
     });
+    
   }
 
 function dragAndDropItem() {
