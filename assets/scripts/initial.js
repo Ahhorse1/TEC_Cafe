@@ -73,35 +73,29 @@ function closeModal() {
     });
   }
 
+// adds user to waitlist after filling in form
 function updateWaitlist(){
-    $("#addtoWaitlist").modal('show')
+    $("#addtoWaitlist").modal('show');
     var waitQueue = document.getElementById("ppl_queue");
-    let loginForm = document.getElementById("loginForm");
+    let loginForm = document.getElementById("waitlist-loginForm");
     var name;
     var pid;
 
     loginForm.addEventListener("submit", (e) => {
         e.preventDefault();
+        e.stopImmediatePropagation();
 
-        name = document.getElementById("name");
-        pid = document.getElementById("pid");
+        name = document.getElementById("waitlist-name");
+        pid = document.getElementById("waitlist-pid");
 
         if (name.value == "" || pid.value == "") {
             alert("Ensure you input a value in both fields!");
-        } else {
-            // perform operation with form input
-            // alert("This form has been successfully submitted!");
-            // console.log(
-            // `This form has a name of ${name.value} and pid of ${pid.value}`
-            // );
-            
+        } else {            
             var li = document.createElement("li");
             li.innerHTML = name.value;
             li.id = name+pid;
             waitQueue.appendChild(li);
-
-            name.value = "";
-            pid.value = "";
+            loginForm.reset();
             $('#addtoWaitlist').modal('toggle'); 
         }
     });
