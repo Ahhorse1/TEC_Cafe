@@ -42,8 +42,10 @@ async function updatePC(id) {
             let pid = pcToUser[id][1]
             let nameELem = document.getElementById("info-name")
             let pidElem = document.getElementById("info-pid")
+            let pcElem = document.getElementById("info-pc")
             nameELem.innerHTML="Name: "+ name;
             pidElem.innerHTML = "PID: "+ pid;
+            pcElem.innerHTML = "PC: "+ id;
             let endBtn = document.getElementById("endButton")
             endBtn.addEventListener("click", (e) => {
                 e.preventDefault();
