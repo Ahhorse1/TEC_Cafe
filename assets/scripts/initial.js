@@ -65,7 +65,6 @@ function getInfo(id) {
     let userInfo = pcToUser[id];
     let name = userInfo[0]
     let pid = userInfo[1]
-    console.log("works")
     let button = document.getElementById(id);
     button.title = "Name: " + name + "\n" + "PID: " + pid;
 }
@@ -80,7 +79,7 @@ function pushQueue(id) {
 
 function removeQueue(id) {
     var currentQueue = document.getElementById("pc_queue");
-    currentQueue.removeChild(document.getElementById());
+    currentQueue.removeChild(document.getElementById(id+"time"));
 }
 
 async function startTimer(id,maxTime=7200){
@@ -120,7 +119,6 @@ function submitModal(id, modalID) {
             // map to PC
             pcToUser[id] = [name.value, pid.value];
             userToPC[name.value] = id;
-            console.log(pcToUser[id]);
         });
     });
     
