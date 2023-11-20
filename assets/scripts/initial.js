@@ -80,7 +80,7 @@ function pushQueue(id) {
 
 function removeQueue(id) {
     var currentQueue = document.getElementById("pc_queue");
-    currentQueue.removeChild(document.getElementById(id+"time"));
+    currentQueue.removeChild(document.getElementById());
 }
 
 async function startTimer(id,maxTime=7200){
@@ -178,6 +178,11 @@ function dragAndDropItem() {
     });
 }
 
+function removeFromWaitlist(id) {
+    var waitQueue = document.getElementById("ppl_queue");
+    waitQueue.removeChild(document.getElementById(id));
+}
+
 // adds user to waitlist after filling in form
 function updateWaitlist(){
     $("#addtoWaitlist").modal('show');
@@ -195,13 +200,28 @@ function updateWaitlist(){
 
         if (name.value == "" || pid.value == "") {
             alert("Ensure you input a value in both fields!");
-        } else {            
+        } else {     
+            waitingName = name.value;
+            waitingPID = pid.value;       
             var li = document.createElement("li");
             li.class = "waiting-components";
             li.draggable = true;
             li.ondragstart = dragAndDropItem();
             li.innerHTML = name.value;
-            li.id = name+pid;
+            li.id = name.value+pid.value+"wait";
+            li.addEventListener("click", (e) => {
+                $("#waitlistInfoModal").modal('show');
+                let nameELem = document.getElementById("waitlist-info-name")
+                let pidElem = document.getElementById("waitlist-info-pid")
+                nameELem.innerHTML="Name: "+ waitingName;
+                pidElem.innerHTML = "PID: "+ waitingPID;
+                let endButton = document.getElementById("waitlist-endButton")
+                endButton.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    removeFromWaitlist(li.id);
+                    $("#waitlistInfoModal").modal('toggle');
+                })
+            });
             waitQueue.appendChild(li);
             loginForm.reset();
             $('#addtoWaitlist').modal('toggle'); 
