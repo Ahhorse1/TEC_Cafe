@@ -195,6 +195,7 @@ function updateWaitlist(){
             alert("Ensure you input a value in both fields!");
         } else {            
             var li = document.createElement("li");
+            li.class = "waiting-components";
             li.draggable = true;
             li.ondragstart = dragAndDropItem();
             li.innerHTML = name.value;

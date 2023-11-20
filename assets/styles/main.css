@@ -26,11 +26,47 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    margin: 10px;
+    text-align: center;
+    align-items: center;
+    margin-left: 60px;
+    margin-right: 20px;
+    & h3 {
+        padding: 10px 10px 10px 10px;
+    }
+    & button {
+        background-color: darkblue; /* yellow */
+        color: white;
+        border: 2px solid darkblue;
+        border-radius: 7%;
+        padding: 10px 10px 10px 10px;
+    }
+    & button:hover {
+        cursor: pointer;
+    }
+    & li {
+        margin-top: 15px;
+        background-color: yellow; /* yellow */
+        height: fit-content;
+        width: 150px;
+        border: 2px solid black;
+        border-radius: 7%;
+        list-style-type: none
+    }
+    & li:hover {
+        cursor: pointer;
+    }
 }
 
 .layout {
+    margin-top: 60px;
     display: flex;
+}
+
+.modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .pcButtons {
@@ -40,13 +76,14 @@
     width: 100px;
     height: 100px;
     padding: 25px;
-    border: 5px solid black;
-    margin: 25px;
+    border: 4px solid black;
+    margin: 15px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     cursor: pointer;
+    border-radius: 15%;
 }
 
 .waitlist {
